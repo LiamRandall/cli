@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+const path = require("path");
+const wapcDir = require("os").homedir() + path.sep + ".wapc" + path.sep;
+const wapcNodeModules = wapcDir + "node_modules";
+const appModulePath = require("app-module-path");
+appModulePath.addPath(wapcNodeModules);
+appModulePath.addPath(path.resolve(__dirname, "../node_modules"));
+
+require("@oclif/command")
+  .run()
+  .then(require("@oclif/command/flush"))
+  .catch(require("@oclif/errors/handle"));

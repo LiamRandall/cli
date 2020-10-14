@@ -1,0 +1,61 @@
+{
+  "name": "wapc",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wapc/wapc-cli"
+  },
+  "author": "Phil Kedy",
+  "bin": {
+    "wapc": "./bin/run"
+  },
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint **/*.ts"
+  },
+  "module": "./lib/index.js",
+  "files": [
+    "lib/"
+  ],
+  "exports": {
+    "./": "./lib/"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^3",
+    "@types/string-template": "^1.0.2",
+    "app-module-path": "^2.2.0",
+    "https-proxy-agent": "^5.0.0",
+    "js-yaml": "^3.14.0",
+    "prettier": "^2.1.2",
+    "string-template": "^1.0.0",
+    "widl-codegen": "git+https://github.com/wapc/widl-codegen.git#master"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/test": "^1",
+    "@types/chai": "^4",
+    "@types/mocha": "^5",
+    "@types/node": "^14.11.2",
+    "@types/prettier": "^2.1.1",
+    "@types/js-yaml": "^3.12.5",
+    "@types/http-proxy-agent": "^2.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "eslint": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "tslib": "1.11.1",
+    "typescript": "^4.0.3"
+  },
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "wapc",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "types": "lib/index.d.ts"
+}

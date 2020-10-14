@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "strictNullChecks": true,
+    "target": "es2018",
+    "lib": ["esnext"],
+    "outDir": "lib",
+    "rootDir": "src",
+    "declaration": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "widl-codegen/*": ["node_modules/widl-codegen/lib/*"]
+    }
+  },
+  "exclude": ["node_modules", "lib"],
+  "include": ["src"]
+}
