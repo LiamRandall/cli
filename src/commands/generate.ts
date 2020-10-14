@@ -48,52 +48,57 @@ src/module.ts created.
     const configFile = args.file;
 
     let configContents = await load(configFile);
-    let config = yaml.safeLoad(configContents) as Config;
-    let parentDir = config.parentDir || "";
-    parentDir = parentDir.trim();
-    if (parentDir.length == 0) {
-      parentDir = "./";
-    } else if (!parentDir.endsWith(path.sep)) {
-      parentDir += path.sep;
-    }
+    const documents = configContents.split(/\R*---\s*\R*/);
 
-    console.log(`Loading WIDL ${config.schema}`);
-
-    const schemaContents = await load(config.schema);
-    const doc = parse(schemaContents);
-
-    for (var entry of Object.entries(config.generates)) {
-      const filename = entry[0];
-      const fullPath = parentDir + filename;
-      const generate: any = entry[1];
-
-      if (generate.ifNotExists && fs.existsSync(fullPath)) {
-        return;
+    for (let i = 0; i < documents.length; i++) {
+      const docContents = documents[i];
+      let config = yaml.safeLoad(docContents) as Config;
+      let parentDir = config.parentDir || "";
+      parentDir = parentDir.trim();
+      if (parentDir.length == 0) {
+        parentDir = "./";
+      } else if (!parentDir.endsWith(path.sep)) {
+        parentDir += path.sep;
       }
 
-      console.log(`Generating ${fullPath}`);
+      console.log(`Loading WIDL ${config.schema}`);
 
-      const writer = new Writer();
-      const context = new Context(generate.config);
-      const pkg = require(generate.package);
-      const visitorClass = pkg[generate.visitorClass];
-      const visitor = new visitorClass(writer);
-      doc.accept(context, visitor);
-      let source = writer.string();
-      const ext = path.extname(fullPath).toLowerCase();
-      switch (ext) {
-        case ".ts":
-          source = formatAssemblyScript(source);
-          break;
-      }
-      fs.writeFileSync(fullPath, source);
-      switch (ext) {
-        case ".go":
-          formatGolang(filename, parentDir);
-          break;
-        case ".rs":
-          formatRust(filename, parentDir);
-          break;
+      const schemaContents = await load(config.schema);
+      const doc = parse(schemaContents);
+
+      for (var entry of Object.entries(config.generates)) {
+        const filename = entry[0];
+        const fullPath = parentDir + filename;
+        const generate: any = entry[1];
+
+        if (generate.ifNotExists && fs.existsSync(fullPath)) {
+          return;
+        }
+
+        console.log(`Generating ${fullPath}`);
+
+        const writer = new Writer();
+        const context = new Context(generate.config);
+        const pkg = require(generate.package);
+        const visitorClass = pkg[generate.visitorClass];
+        const visitor = new visitorClass(writer);
+        doc.accept(context, visitor);
+        let source = writer.string();
+        const ext = path.extname(fullPath).toLowerCase();
+        switch (ext) {
+          case ".ts":
+            source = formatAssemblyScript(source);
+            break;
+        }
+        fs.writeFileSync(fullPath, source);
+        switch (ext) {
+          case ".go":
+            formatGolang(filename, parentDir);
+            break;
+          case ".rs":
+            formatRust(filename, parentDir);
+            break;
+        }
       }
     }
   }
