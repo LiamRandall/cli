@@ -12,7 +12,7 @@ export default class New extends Command {
   static description = "create a new waPC project";
 
   static examples = [
-    `$ wapc new assemblyscript
+    `$ wapc new assemblyscript hello_world
 `,
   ];
 
