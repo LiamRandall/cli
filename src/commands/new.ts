@@ -13,7 +13,6 @@ export default class New extends Command {
 
   static examples = [
     `$ wapc new assemblyscript
-hello world from ./src/command/hello.ts!
 `,
   ];
 

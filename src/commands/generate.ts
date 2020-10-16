@@ -2,14 +2,11 @@ import { Command, flags } from "@oclif/command";
 
 import fs from "fs";
 import path from "path";
-import url from "url";
-import https from "https";
-import { HttpsProxyAgent } from "https-proxy-agent";
 import yaml from "js-yaml";
 import prettier from "prettier";
 import child_process from "child_process";
 import { parse, Context, Writer } from "widl-codegen/widl";
-import { promisify } from "util";
+import { load } from "../util";
 
 interface Config {
   parentDir: string | undefined;
@@ -29,7 +26,6 @@ export default class Generate extends Command {
 
   static examples = [
     `$ wapc generate codegen.yaml
-src/module.ts created.
 `,
   ];
 
@@ -48,7 +44,7 @@ src/module.ts created.
     const configFile = args.file;
 
     let configContents = await load(configFile);
-    const documents = configContents.split(/\R*---\s*\R*/);
+    const documents = configContents.toString().split(/\R*---\s*\R*/);
 
     for (let i = 0; i < documents.length; i++) {
       const docContents = documents[i];
@@ -64,7 +60,7 @@ src/module.ts created.
       console.log(`Loading WIDL ${config.schema}`);
 
       const schemaContents = await load(config.schema);
-      const doc = parse(schemaContents);
+      const doc = parse(schemaContents.toString());
 
       for (var entry of Object.entries(config.generates)) {
         const filename = entry[0];
@@ -102,42 +98,6 @@ src/module.ts created.
       }
     }
   }
-}
-
-async function load(endpoint: string): Promise<string> {
-  return new Promise<string>((resolve, reject) => {
-    if (endpoint.startsWith("http://") || endpoint.startsWith("https://")) {
-      const proxy = process.env.http_proxy;
-      let options: any = url.parse(endpoint);
-      if (proxy) {
-        const agent = new HttpsProxyAgent(proxy);
-        options.agent = agent;
-      }
-      const req = https.request(options, (res) => {
-        let response = "";
-        res.on("data", (d: Buffer) => {
-          response += d.toString();
-        });
-        res.on("end", () => {
-          if (res.statusCode && res.statusCode! / 100 == 2) {
-            resolve(response);
-          }
-        });
-      });
-      req.on("error", (err: Error) => {
-        reject(err);
-      });
-      req.end();
-    } else {
-      promisify(fs.readFile)(endpoint, "utf8")
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    }
-  });
 }
 
 function formatAssemblyScript(source: string): string {

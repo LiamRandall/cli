@@ -4,7 +4,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wapc/wapc-cli"
+    "url": "https://github.com/wapc/cli"
   },
   "author": "Phil Kedy",
   "bin": {
@@ -27,12 +27,16 @@
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^3",
+    "@types/follow-redirects": "^1.13.0",
     "@types/string-template": "^1.0.2",
+    "@types/unzipper": "^0.10.3",
     "app-module-path": "^2.2.0",
+    "follow-redirects": "^1.13.0",
     "https-proxy-agent": "^5.0.0",
     "js-yaml": "^3.14.0",
     "prettier": "^2.1.2",
     "string-template": "^1.0.0",
+    "unzipper": "^0.10.11",
     "widl-codegen": "git+https://github.com/wapc/widl-codegen.git#master"
   },
   "devDependencies": {
