@@ -71,6 +71,9 @@ export async function install(location: string): Promise<void> {
       if (dir != undefined) {
         const baseDir = path.join(cloneTemp, dir);
         walkSync(baseDir, (parentDir: string, dirent: fs.Dirent) => {
+          if (dirent.name == ".gitkeep") {
+            return
+          }
           const dir = parentDir.substring(baseDir.length + 1);
           const file = path.join(dir, dirent.name);
           if (dirent.isDirectory()) {
@@ -93,7 +96,7 @@ export async function install(location: string): Promise<void> {
     const prefix = firstPath.substring(0, firstPath.indexOf("/") + 1);
     for (let i = 0; i < dir.files.length; i++) {
       const item = dir.files[i];
-      if (item.type != "File") {
+      if (item.type != "File" || path.basename(item.path) == ".gitkeep") {
         continue;
       }
 
