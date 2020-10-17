@@ -1,8 +1,9 @@
 import { Command, flags } from "@oclif/command";
 import os from "os";
-import path, { basename, sep } from "path";
+import path from "path";
 import fs from "fs";
 import format from "string-template";
+import { checkPrerequisites } from '../util';
 
 interface StringMap {
   [key: string]: string;
@@ -49,6 +50,8 @@ export default class New extends Command {
     const wapcDir = os.homedir() + path.sep + ".wapc" + path.sep;
     const templatesDir = wapcDir + "templates" + path.sep;
     const target = path.resolve(args.name);
+
+    await checkPrerequisites();
 
     if (fs.existsSync(target)) {
       this.error(`${target} already exists`);

@@ -6,7 +6,7 @@ import yaml from "js-yaml";
 import prettier from "prettier";
 import child_process from "child_process";
 import { parse, Context, Writer } from "widl-codegen/widl";
-import { load } from "../util";
+import { checkPrerequisites, load } from "../util";
 
 interface Config {
   parentDir: string | undefined;
@@ -42,6 +42,8 @@ export default class Generate extends Command {
   async run() {
     const { args, flags } = this.parse(Generate);
     const configFile = args.file;
+
+    await checkPrerequisites();
 
     let configContents = await load(configFile);
     const documents = configContents.toString().split(/\R*---\s*\R*/);

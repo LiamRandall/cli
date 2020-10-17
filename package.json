@@ -25,7 +25,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "@oclif/command": "^1",
-    "@oclif/config": "^1",
+    "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3",
     "@types/follow-redirects": "^1.13.0",
     "@types/string-template": "^1.0.2",
