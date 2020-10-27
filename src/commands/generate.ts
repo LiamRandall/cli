@@ -70,7 +70,7 @@ export default class Generate extends Command {
         const generate: any = entry[1];
 
         if (generate.ifNotExists && fs.existsSync(fullPath)) {
-          return;
+          continue;
         }
 
         console.log(`Generating ${fullPath}`);
