@@ -77,7 +77,17 @@ export default class Generate extends Command {
 
         const writer = new Writer();
         const context = new Context(generate.config);
-        const pkg = require(generate.package);
+        var pkg;
+        try {
+          pkg = require(generate.package);
+        } catch (e) {
+          // The app-module-path does not work as expected in all versions of Node.js.
+          // This is a brute force attempt if the above fails.
+          const path = require("path");
+          const wapcDir = require("os").homedir() + path.sep + ".wapc" + path.sep;
+          const wapcNodeModules = wapcDir + "node_modules";
+          pkg = require(wapcNodeModules + path.sep + generate.package);
+        }
         const visitorClass = pkg[generate.visitorClass];
         const visitor = new visitorClass(writer);
         doc.accept(context, visitor);
