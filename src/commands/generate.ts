@@ -1,5 +1,6 @@
 import { Command, flags } from "@oclif/command";
 
+import os from "os";
 import fs from "fs";
 import path from "path";
 import yaml from "js-yaml";
@@ -83,8 +84,7 @@ export default class Generate extends Command {
         } catch (e) {
           // The app-module-path does not work as expected in all versions of Node.js.
           // This is a brute force attempt if the above fails.
-          const path = require("path");
-          const wapcDir = require("os").homedir() + path.sep + ".wapc" + path.sep;
+          const wapcDir = os.homedir() + path.sep + ".wapc" + path.sep;
           const wapcNodeModules = wapcDir + "node_modules";
           pkg = require(wapcNodeModules + path.sep + generate.package);
         }
