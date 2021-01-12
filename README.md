@@ -4,7 +4,7 @@ WebAssembly Procedure Calls command line interface.
 
 ### Problem
 
-WebAssembly is capable of passing and accepting simple numeric parameters between host and guests while non trivial applications would like to . 
+WebAssembly is capable of passing and accepting simple numeric parameters between host and guests while non trivial applications would like to leverage more complex data types like strings, structs, binary blobs or other complex data types. 
 
 ### Solution
 
