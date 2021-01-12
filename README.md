@@ -12,14 +12,16 @@ waPC is a polyglot specification and toolkit for WebAssembly that enables a bidi
  
 ### Basic Overview
  
-waPC cli is a simple and fast polyglot code generator for waPC.  waPC leverages a simple workflow, robust set of templates, and user customization to generate this scaffolding code and may be further customized to your use case.  It presently supports AssemblyScript, Rust, and TinyGo.  You may leverage this cli to create the scaffolding and libraries necessary to build your applications.  waPC internally leverages an Interactive Data Language (IDL) called WIDL, short for WebAssembly IDL, based on graph QL, but without the query logic necessary for our use case.  For further information about our design choices and architecture please see our FAQ.  While WIDL is used internally between the host and underlying guest, you are of course free to expose whatever IDL you would like externally via api or other mechanisms.
+waPC cli is a simple and fast polyglot code generator for waPC.  waPC leverages a simple workflow, robust set of templates, and user customization to generate this scaffolding code and may be further customized to your use case.  It presently supports AssemblyScript, Rust, and TinyGo.  You may leverage this cli to create the scaffolding and libraries necessary to build your applications.  waPC internally leverages an Interactive Data Language (IDL) called WIDL, short for WebAssembly IDL, based on [GraphQL](https://graphql.org/learn/schema/), but without the query logic necessary for our use case.  Complex parameters are encoded using MessagePack which is simple, performs well, and easy to use/debug.  
+
+For further information about our design choices and architecture please see our FAQ.  While WIDL is used internally between the host and underlying guest, you are of course free to expose whatever IDL you would like externally via api or other mechanisms.
  
 waPC cli has a very simple workflow:
  
 1. Generate a basic project and data model scaffold with your choice of language.
 2. Customize templates.
 3. Compile your auto-generated libraries.
-4. Load your libraries in a waPC guest host and leverage it in your project.
+4. Load your libraries in a waPC host (e.g. [wapc-rust](https://github.com/wapc/wapc-rust) or [wapc-go](https://github.com/wapc/wapc-go)) and leverage them in your project.
 ...
 Profit
  
@@ -33,6 +35,7 @@ These instructions will get you a copy of the project up and running on your loc
 ```
 npm install -g git+https://github.com/wapc/cli.git#master
 wapc new assemblyscript hello_world
+cd hello_world
 make
 ```
  
@@ -109,7 +112,7 @@ waPC cli has a very simple workflow:
 1. Generate basic project and data model scaffold.
 2. Customize templates.
 3. Compile your libraries.
-4. Load your libraries in a waPC guest host and leverage them in your project.
+4. Load your libraries in a waPC host (e.g. [wapc-rust](https://github.com/wapc/wapc-rust) or [wapc-go](https://github.com/wapc/wapc-go)) and leverage them in your project.
  
 Generate a new application:
  
