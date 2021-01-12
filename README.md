@@ -117,7 +117,7 @@ Generate a new application:
 > wapc new assemblyscript hello_world
 ```
 
-Inspect your application:
+Inspect your scaffold:
 
 ```
 ./hello_world/Makefile
@@ -131,7 +131,7 @@ Inspect your application:
 
 The scaffolding created by the `wapc new` step above creates a template project that you can then use 'make' to build into your custom library.  You can customize this template project with your data specification, the files you would like the autogenerator to build and optionally your own custom templates.
 
-1. Makefile: reguardless of what language you use in the generator you can simply use `make` to build your project.
+1. `Makefile`: reguardless of what language you use in the generator you can simply use `make` to build your project.
 2. `codegen.yaml` is used to map generated files to their *packages*, *visitorClass* and optional *config* settings.
 3. `package.json` provides instructions to npm on which templates to download for the autogeneration and further build instructions for the generated code.
 4. `schema.widl` this is the data schema that you should customize for your application.
